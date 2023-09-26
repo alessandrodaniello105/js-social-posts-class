@@ -69,7 +69,14 @@ const container = document.getElementById('container')
 let newPost;
 
 posts.forEach((post, index) => {
-    newPost = new Post(post.id, post.author.name, post.author.image, post.content, post.media, post.likes, post.created)
+    newPost = new Post(post.id, post.author, post.content, post.media, post.likes, post.created)
+    const {media, likes, created, author, content, id} = newPost;
+
+    let {
+        name,
+        image,
+    } = author;
+
     newPost._idPost = index;
 
     container.innerHTML += `
@@ -79,36 +86,36 @@ posts.forEach((post, index) => {
             <div class="post-meta">
 
                 <div class="post-meta__icon">
-                    <img class="profile-pic" src="${newPost.author._authorImage}" alt="${newPost.author._authorName}">                    
+                    <img class="profile-pic" src="${image}" alt="${name}">                    
                 </div>
 
                 <div class="post-meta__data">
-                    <div class="post-meta__author">${newPost.author._authorName}</div>
-                    <div class="post-meta__time">${newPost.created}</div>
+                    <div class="post-meta__author">${name}</div>
+                    <div class="post-meta__time">${created}</div>
                 </div>  
 
             </div>
 
         </div>
 
-        <div class="post__text">${newPost.content}</div>
+        <div class="post__text">${content}</div>
 
         <div class="post__image">
-            <img src="${newPost.media}" alt="">
+            <img src="${media}" alt="">
         </div>
 
         <div class="post__footer">
             <div class="likes js-likes">
 
                 <div class="likes__cta">
-                    <a class="like-button  js-like-button" href="#" data-postid="${newPost.id}">
+                    <a class="like-button  js-like-button like-button--liked" href="#" data-postid="${id}">
                         <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                         <span class="like-button__label">Mi Piace</span>
                     </a>
                 </div>
 
                 <div class="likes__counter">
-                    Piace a <b id="like-counter-1" class="js-likes-counter">${newPost.likes}</b> persone
+                    Piace a <b id="like-counter-1" class="js-likes-counter">${likes}</b> persone
                 </div>
 
             </div> 
@@ -116,10 +123,14 @@ posts.forEach((post, index) => {
 
     </div>
 `;
-})
+});
 
 // Creo un array dove aggiungerò i post con "mi piace" cliccato
 let likedPosts = [1, 3];
+
+// likedPosts.forEach((el) => {
+//     console.log(el)
+// })
 
 // Creo un array con tutti i bottoni, poi li ciclo e gli assegno il comportamento
 const likeButtons = document.querySelectorAll('.js-like-button');
@@ -127,11 +138,15 @@ const likeButtons = document.querySelectorAll('.js-like-button');
 likeButtons.forEach((btn, index) => {
 
     btn._index = index;
-    
-    btn.addEventListener('click', function() {
-        console.log(this._index)
+
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (likedPosts.includes(this._index)) {
+            btn.classList.toggle('like-button--liked');
+        }
     });
-})
+
+});
 
 //TODO: funzione di stampa avatar fallback
 // function printAuthorImg(name, img) {
