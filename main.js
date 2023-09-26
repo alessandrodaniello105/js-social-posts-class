@@ -118,8 +118,25 @@ posts.forEach((post, index) => {
 `;
 })
 
+// Creo un array dove aggiungerò i post con "mi piace" cliccato
+let likedPosts = [1, 3];
 
+// Creo un array con tutti i bottoni, poi li ciclo e gli assegno il comportamento
+const likeButtons = document.querySelectorAll('.js-like-button');
 
+likeButtons.forEach((btn, index) => {
+
+    btn._index = index;
+    
+    btn.addEventListener('click', function() {
+        console.log(this._index)
+    });
+})
+
+//TODO: funzione di stampa avatar fallback
+// function printAuthorImg(name, img) {
+    
+// }
 
 
 
