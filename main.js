@@ -7,9 +7,6 @@
 
 import Post from "./class/Post.js";
 
-const newPost = new Post(3, 'alfonso', 'https://unsplash.it/300/300?image=15' , 'questo è il testo', 'https://unsplash.it/600/400?image=112', 10, '10-10-2010')
-console.log(newPost)
-
 const posts = [
     {
         "id": 1,
@@ -67,29 +64,97 @@ const posts = [
         "created": "2021-03-05"
     }
 ];
+const container = document.getElementById('container')
+
+let newPost;
+
+posts.forEach((post, index) => {
+    newPost = new Post(post.id, post.author.name, post.author.image, post.content, post.media, post.likes, post.created)
+    newPost._idPost = index;
+
+    container.innerHTML += `
+    <div class="post">
+        <div class="post__header">
+
+            <div class="post-meta">
+
+                <div class="post-meta__icon">
+                    <img class="profile-pic" src="${newPost.author._authorImage}" alt="${newPost.author._authorName}">                    
+                </div>
+
+                <div class="post-meta__data">
+                    <div class="post-meta__author">${newPost.author._authorName}</div>
+                    <div class="post-meta__time">${newPost.created}</div>
+                </div>  
+
+            </div>
+
+        </div>
+
+        <div class="post__text">${newPost.content}</div>
+
+        <div class="post__image">
+            <img src="${newPost.media}" alt="">
+        </div>
+
+        <div class="post__footer">
+            <div class="likes js-likes">
+
+                <div class="likes__cta">
+                    <a class="like-button  js-like-button" href="#" data-postid="${newPost.id}">
+                        <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+                        <span class="like-button__label">Mi Piace</span>
+                    </a>
+                </div>
+
+                <div class="likes__counter">
+                    Piace a <b id="like-counter-1" class="js-likes-counter">${newPost.likes}</b> persone
+                </div>
+
+            </div> 
+        </div>       
+
+    </div>
+`;
+})
 
 
-let myPosts = [...posts];
 
 
 
-myPosts.forEach((post) => {
 
-    let stringDataArray = post.created.split('-');
+// function printPost(el) {
 
-    let [ year, month, day ] = stringDataArray;
+// };
 
-    post.created = '';
 
-    // post.created = [month, day, year] //US data
-    post.created = [day, month, year] //IT data
 
-    let outputData = post.created.join('-')
+
+
+
+
+
+
+
+
+
+// myPosts.forEach((post) => {
+
+//     let stringDataArray = post.created.split('-');
+
+//     let [ year, month, day ] = stringDataArray;
+
+//     post.created = '';
+
+//     // post.created = [month, day, year] //US data
+//     post.created = [day, month, year] //IT data
+
+//     let outputData = post.created.join('-')
 
     
 
-    console.log(outputData)
+//     console.log(outputData)
 
-});
+// });
 
-console.log(myPosts);
+// console.log(myPosts);
